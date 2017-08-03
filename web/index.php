@@ -2,17 +2,15 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
-use Expense\Record;
+use Expense\Repository;
 
 // Debug
-if ($_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
+if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     ini_set('display_errors', 1);
 }
 
-$records = [];
-for ($i = 0; $i < 10; $i++) {
-    $records[] = new Record($i, 'This is record ' . $i, mt_rand(1, 100), new DateTimeImmutable());
-}
+$repo = new Repository();
+$records = $repo->getAll();
 
 ?>
 
