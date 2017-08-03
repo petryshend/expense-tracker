@@ -2,6 +2,7 @@
 
 require __DIR__ . '/../vendor/autoload.php';
 
+use DataBase\Connection;
 use Expense\Repository;
 
 // Debug
@@ -9,7 +10,26 @@ if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
     ini_set('display_errors', 1);
 }
 
-$repo = new Repository();
+$config = [
+    'db' => [
+        'driver' => 'pgsql',
+        'host' => 'localhost',
+        'port' => '5432',
+        'dbname' => 'expense_tracker',
+        'username' => 'postgres',
+        'password' => 'postgres',
+    ]
+];
+
+$connection = new Connection(
+    $config['db']['driver'],
+    $config['db']['host'],
+    $config['db']['port'],
+    $config['db']['dbname'],
+    $config['db']['username'],
+    $config['db']['password']
+);
+$repo = new Repository($connection);
 $records = $repo->getAll();
 
 ?>
