@@ -5,21 +5,19 @@ require __DIR__ . '/../vendor/autoload.php';
 use DataBase\Connection;
 use Expense\Repository;
 
+session_start();
+
 // Debug
 if (isset($_SERVER['REMOTE_ADDR']) && $_SERVER['REMOTE_ADDR'] == '127.0.0.1') {
+    error_reporting(E_ALL);
     ini_set('display_errors', 1);
 }
 
-$config = [
-    'db' => [
-        'driver' => 'pgsql',
-        'host' => 'localhost',
-        'port' => '5432',
-        'dbname' => 'expense_tracker',
-        'username' => 'postgres',
-        'password' => 'postgres',
-    ]
-];
+$config = include __DIR__ . '/../app/config.php';
+
+if (!isset($_SESSION['username'])) {
+    header('Location: login.php');
+}
 
 $connection = new Connection(
     $config['db']['driver'],
@@ -34,42 +32,29 @@ $records = $repo->getAll();
 
 ?>
 
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+<?php include __DIR__ . '/../templates/header.php'; ?>
 
-    <link rel="stylesheet" href="css/bootstrap.css">
-    <link rel="stylesheet" href="css/bootstrap-theme.css">
+<h2>This is expense tracker</h2>
+<a href="logout.php">Logout</a>
+<table class="table">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th>Title</th>
+            <th>Amount</th>
+            <th>Created At</th>
+        </tr>
+    </thead>
+    <tbody>
+        <?php foreach ($records as $record): ?>
+            <tr>
+                <td><?= $record->getId(); ?></td>
+                <td><?= $record->getTitle(); ?></td>
+                <td><?= $record->getAmount(); ?></td>
+                <td><?= $record->getCreatedAt()->format('Y-m-d H:i:s'); ?></td>
+            </tr>
+        <?php endforeach; ?>
+    </tbody>
+</table>
 
-    <title>Expense Tracker</title>
-</head>
-<body>
-    <div class="container">
-        <h2>This is expense tracker</h2>
-        <table class="table">
-            <thead>
-                <tr>
-                    <th>#</th>
-                    <th>Title</th>
-                    <th>Amount</th>
-                    <th>Created At</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($records as $record): ?>
-                    <tr>
-                        <td><?= $record->getId(); ?></td>
-                        <td><?= $record->getTitle(); ?></td>
-                        <td><?= $record->getAmount(); ?></td>
-                        <td><?= $record->getCreatedAt()->format('Y-m-d H:i:s'); ?></td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
-    </div>
-</body>
-</html>
+<?php include __DIR__ . '/../templates/footer.php'; ?>
