@@ -13,17 +13,21 @@ class Record
     /** @var \DateTimeImmutable */
     private $createdAt;
 
-    function __construct(int $id, string $title, float $amount, \DateTimeInterface $createdAt)
+    function __construct(string $title, float $amount)
     {
-        $this->id = $id;
         $this->title = $title;
         $this->amount = $amount;
-        $this->createdAt = $createdAt;
     }
 
     public function getId(): int
     {
         return $this->id;
+    }
+
+    public function setId(int $id): self
+    {
+        $this->id = $id;
+        return $this;
     }
 
     public function getTitle(): string
@@ -39,5 +43,11 @@ class Record
     public function getCreatedAt(): \DateTimeImmutable
     {
         return $this->createdAt;
+    }
+
+    public function setCreatedAt(\DateTimeImmutable $createdAd): self
+    {
+        $this->createdAt = $createdAd;
+        return $this;
     }
 }
