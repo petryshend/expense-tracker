@@ -9,7 +9,7 @@
         </div>
         <div class="form-group">
             <label for="new-expense-amount">Amount</label>
-            <input type="number" class="form-control" id="new-expense-amount" name="new-expense-amount" placeholder="Amount">
+            <input type="number" step="0.01" class="form-control" id="new-expense-amount" name="new-expense-amount" placeholder="Amount">
         </div>
         <button type="submit" class="btn btn-default">Create</button>
     </form>
