@@ -1,60 +1,46 @@
 <?php
 
-    $config = include __DIR__ . '/../app/config.php';
+use Symfony\Component\HttpFoundation\RedirectResponse;
+use Symfony\Component\HttpFoundation\Request;
 
-    session_start();
-    $errors = [];
-    $validUsername = false;
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        if (!isset($_POST['username'])) {
-            $errors[] = 'You must enter username';
-        } else {
-            if ($_POST['username'] !== $config['login']['username']) {
-                $errors[] = 'Username is wrong';
-            } else {
-                $validUsername = true;
-            }
-        }
-        $validPassword = false;
-        if (!isset($_POST['password'])) {
-            $errors[] = 'You must enter password';;
-        } else {
-            if ($_POST['password'] !== $config['login']['password']) {
-                $errors[] = 'Password is wrong';
-            } else {
-                $validPassword = true;
-            }
-        }
+require 'bootstrap.php';
 
-        if ($validUsername && $validPassword) {
-            $_SESSION['username'] = $_POST['username'];
-            header('Location: index.php');
+$config = include __DIR__ . '/../app/config.php';
+
+/** @var Request $request */
+
+$errors = [];
+$validUsername = false;
+$username = $request->get('username');
+$password = $request->get('password');
+if ($request->isMethod(Request::METHOD_POST)) {
+    if (!$username) {
+        $errors[] = 'You must enter username';
+    } else {
+        if ($username !== $config['login']['username']) {
+            $errors[] = 'Username is wrong';
+        } else {
+            $validUsername = true;
         }
     }
-?>
+    $validPassword = false;
+    if (!$password) {
+        $errors[] = 'You must enter password';;
+    } else {
+        if ($password !== $config['login']['password']) {
+            $errors[] = 'Password is wrong';
+        } else {
+            $validPassword = true;
+        }
+    }
 
-<?php include __DIR__ . '/../templates/header.php'; ?>
+    if ($validUsername && $validPassword) {
+        $_SESSION['username'] = $username;
+        $response = new RedirectResponse('index.php');
+        $response->send();
+    }
+}
 
-<div class="col-md-4 col-md-offset-4">
-    <h3>Login to Expense Tracker</h3>
-    <form action="" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
-        </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
-        </div>
-        <button type="submit" class="btn btn-default">Submit</button>
-    </form>
-</div>
+include __DIR__ . '/../templates/login.php';
 
-<div class="col-md-4 col-md-offset-4">
-    <?php foreach ($errors as $error): ?>
-        <div class="alert alert-danger"><?= $error; ?></div>
-    <?php endforeach; ?>
-</div>
-
-<?php include __DIR__ . '/../templates/footer.php'; ?>
 

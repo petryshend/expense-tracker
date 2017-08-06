@@ -4,5 +4,7 @@
             "": "src/"
         }
     },
-    "require": {}
+    "require": {
+        "symfony/http-foundation": "^3.3"
+    }
 }

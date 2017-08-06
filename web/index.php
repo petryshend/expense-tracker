@@ -1,11 +1,25 @@
 <?php
 
-require __DIR__ . '/../vendor/autoload.php';
+use DataBase\Connection;
+use Expense\Repository;
+use Symfony\Component\HttpFoundation\Response;
+
 require 'bootstrap.php';
 
-$records = $expenses->getAll();
-?>
+$config = include __DIR__ . '/../app/config.php';
+$connection = new Connection(
+    $config['db']['driver'],
+    $config['db']['host'],
+    $config['db']['port'],
+    $config['db']['dbname'],
+    $config['db']['username'],
+    $config['db']['password']
+);
+$expenses = new Repository($connection);
 
-<?php include __DIR__ . '/../templates/header.php'; ?>
-<?php include __DIR__ . '/../templates/expense_list.php'; ?>
-<?php include __DIR__ . '/../templates/footer.php'; ?>
+$records = $expenses->getAll();
+
+ob_start();
+include __DIR__ . '/../templates/expense_list.php';
+$response = new Response(ob_get_clean());
+$response->send();

@@ -1,3 +1,5 @@
+<?php include 'partial/header.php'; ?>
+
 <h2>This is expense tracker</h2>
 <a href="logout.php">Logout</a>
 
@@ -28,10 +30,12 @@
     <?php foreach ($records as $record): ?>
         <tr>
             <td><?= $record->getId(); ?></td>
-            <td><?= $record->getTitle(); ?></td>
+            <td><?= htmlentities($record->getTitle()); ?></td>
             <td><?= $record->getAmount(); ?></td>
             <td><?= $record->getCreatedAt()->format('Y-m-d H:i:s'); ?></td>
         </tr>
     <?php endforeach; ?>
     </tbody>
 </table>
+
+<?php include 'partial/footer.php'; ?>

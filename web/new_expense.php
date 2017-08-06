@@ -16,7 +16,7 @@ if (!$title || !$amount) {
     header('Location: index.php');
 }
 
-$record = new Record($title, $amount);
+$record = new Record(htmlentities($title), $amount);
 $expenses->insert($record);
 
 header('Location: index.php');
