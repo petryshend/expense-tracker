@@ -1,5 +1,7 @@
 <?php
 
+use DataBase\Connection;
+use Expense\Repository;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 
@@ -20,3 +22,13 @@ if (!isset($_SESSION['username']) && $request->getBaseUrl() != '/login.php') {
     $response->send();
 }
 
+$config = include __DIR__ . '/../app/config.php';
+$connection = new Connection(
+    $config['db']['driver'],
+    $config['db']['host'],
+    $config['db']['port'],
+    $config['db']['dbname'],
+    $config['db']['username'],
+    $config['db']['password']
+);
+$expenses = new Repository($connection);
