@@ -4,5 +4,5 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 unset($_SESSION['username']);
 
-$response = new RedirectResponse('front.php/login');
+$response = new RedirectResponse('app.php/login');
 $response->send();

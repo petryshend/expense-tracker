@@ -20,7 +20,7 @@ if ($request->getClientIp() == '127.0.0.1') {
 }
 
 if (!isset($_SESSION['username']) && $request->getPathInfo() != '/login') {
-    $response = new RedirectResponse('/front.php/login');
+    $response = new RedirectResponse('/app.php/login');
     $response->send();
 }
 
