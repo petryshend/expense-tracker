@@ -3,7 +3,7 @@
 use Expense\Record;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-$response = new RedirectResponse('/app.php/index');
+$response = new RedirectResponse('/index');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $response->send();

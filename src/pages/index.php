@@ -4,10 +4,10 @@ $records = $expenses->getAll();
 
 ?>
 <h2>This is expense tracker</h2>
-<a href="/app.php/logout">Logout</a>
+<a href="/logout">Logout</a>d
 
 <div>
-    <form action="/app.php/new_expense" class="form-inline" method="post">
+    <form action="/new_expense" class="form-inline" method="post">
         <div class="form-group">
             <label for="new-expense-title">Title</label>
             <input type="text" class="form-control" id="new-expense-title" name="new-expense-title" placeholder="Title">
