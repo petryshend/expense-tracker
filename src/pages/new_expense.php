@@ -3,10 +3,7 @@
 use Expense\Record;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 
-require __DIR__ . '/../vendor/autoload.php';
-require 'bootstrap.php';
-
-$response = new RedirectResponse('index.php');
+$response = new RedirectResponse('/front.php/index');
 
 if ($_SERVER['REQUEST_METHOD'] !== 'POST') {
     $response->send();

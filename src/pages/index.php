@@ -1,10 +1,13 @@
-<?php include 'partial/header.php'; ?>
+<?php
 
+$records = $expenses->getAll();
+
+?>
 <h2>This is expense tracker</h2>
-<a href="logout.php">Logout</a>
+<a href="/front.php/logout">Logout</a>
 
 <div>
-    <form action="new_expense.php" class="form-inline" method="post">
+    <form action="/front.php/new_expense" class="form-inline" method="post">
         <div class="form-group">
             <label for="new-expense-title">Title</label>
             <input type="text" class="form-control" id="new-expense-title" name="new-expense-title" placeholder="Title">
@@ -37,5 +40,3 @@
     <?php endforeach; ?>
     </tbody>
 </table>
-
-<?php include 'partial/footer.php'; ?>
