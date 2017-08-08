@@ -39,6 +39,7 @@ $map = [
     '/login' => __DIR__ . '/../src/pages/login.php',
     '/logout' => __DIR__ . '/../src/pages/logout.php',
     '/index' => __DIR__ . '/../src/pages/index.php',
+    '/' => __DIR__ . '/../src/pages/index.php',
     '/new_expense' => __DIR__ . '/../src/pages/new_expense.php',
 ];
 
