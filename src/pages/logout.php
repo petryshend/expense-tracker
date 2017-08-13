@@ -4,5 +4,5 @@ use Symfony\Component\HttpFoundation\RedirectResponse;
 
 unset($_SESSION['username']);
 
-$response = new RedirectResponse('/login');
+$response = new RedirectResponse($generator->generate('login'));
 $response->send();
