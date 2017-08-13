@@ -32,7 +32,7 @@ if ($request->isMethod(Request::METHOD_POST)) {
 
     if ($validUsername && $validPassword) {
         $_SESSION['username'] = $username;
-        $response = new RedirectResponse($generator->generate('index'));
+        $response = new RedirectResponse('/');
         $response->send();
     }
 }
