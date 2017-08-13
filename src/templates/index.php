@@ -1,8 +1,3 @@
-<?php
-
-$records = $expenses->getAll();
-
-?>
 <h2>This is expense tracker</h2>
 <a href="/logout">Logout</a>
 
