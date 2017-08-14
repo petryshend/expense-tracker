@@ -27,6 +27,9 @@ class ExpenseController
 
     public function indexAction(Request $request): Response
     {
+        if (!isset($_SESSION['username'])) {
+            return new RedirectResponse('/login');
+        }
         return render_template($request, ['records' => $this->expenses->getAll()]);
     }
 
@@ -47,11 +50,6 @@ class ExpenseController
         $this->expenses->insert($record);
 
         return new RedirectResponse('/');
-    }
-
-    public function helloAction(Request $request, string $name): Response
-    {
-        return new Response('Hello ' . $name);
     }
 
     private function getConfig()

@@ -32,8 +32,5 @@ $routes->add('index', new Route('/', [
 $routes->add('new_expense', new Route('/new_expense', [
     '_controller' => 'Expense\ExpenseController::newExpenseAction'
 ]));
-$routes->add('hello', new Route('/hello/{name}', [
-    '_controller' => 'Expense\ExpenseController::helloAction',
-]));
 
 return $routes;
