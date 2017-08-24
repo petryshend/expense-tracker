@@ -17,12 +17,12 @@ class ExpenseController extends BaseController
         $this->expenses = $this->get('expense.record');
     }
 
-    public function indexAction(Request $request): Response
+    public function indexAction(): Response
     {
         if (!isset($_SESSION['username'])) {
             return new RedirectResponse('/login');
         }
-        return render_template($request, ['records' => $this->expenses->getAll()]);
+        return $this->render('index', ['records' => $this->expenses->getAll()]);
     }
 
     public function newExpenseAction(Request $request): Response

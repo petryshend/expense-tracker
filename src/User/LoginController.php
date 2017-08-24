@@ -2,16 +2,15 @@
 
 namespace User;
 
+use Simplex\BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
-class LoginController
+class LoginController extends BaseController
 {
     public function loginAction(Request $request): Response
     {
-        $config = $this->getConfig();
-
         $errors = [];
         $validUsername = false;
         $username = $request->get('username');
@@ -20,7 +19,7 @@ class LoginController
             if (!$username) {
                 $errors[] = 'You must enter username';
             } else {
-                if ($username !== $config['login']['username']) {
+                if ($username !== $this->getParameter('login.username')) {
                     $errors[] = 'Username is wrong';
                 } else {
                     $validUsername = true;
@@ -30,7 +29,7 @@ class LoginController
             if (!$password) {
                 $errors[] = 'You must enter password';;
             } else {
-                if ($password !== $config['login']['password']) {
+                if ($password !== $this->getParameter('login.password')) {
                     $errors[] = 'Password is wrong';
                 } else {
                     $validPassword = true;
@@ -44,17 +43,12 @@ class LoginController
             }
         }
 
-        return render_template($request, ['errors' => $errors]);
+        return $this->render('login', ['errors' => $errors]);
     }
 
-    public function logoutAction(Request $request): Response
+    public function logoutAction(): Response
     {
         unset($_SESSION['username']);
         return new RedirectResponse('/login');
-    }
-
-    private function getConfig()
-    {
-        return include __DIR__ . '/../../app/config.php';
     }
 }

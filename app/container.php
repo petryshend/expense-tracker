@@ -65,6 +65,9 @@ $sc->register('framework', Framework::class)
     ))
 ;
 
+$sc->register('twig', Twig_Environment::class)
+    ->setArguments([new Twig_Loader_Filesystem(__DIR__ . '/../src/templates')]);
+
 $sc->register('connection', Connection::class)
     ->setArguments(['%db.driver%', '%db.host%', '%db.port%', '%db.dbname%', '%db.username%', '%db.password%']);
 

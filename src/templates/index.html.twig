@@ -1,3 +1,8 @@
+{% extends 'base.html.twig' %}
+
+
+{% block body %}
+
 <h2>This is expense tracker</h2>
 <a href="/logout">Logout</a>
 
@@ -25,13 +30,15 @@
     </tr>
     </thead>
     <tbody>
-    <?php foreach ($records as $record): ?>
+    {% for record in records %}
         <tr>
-            <td><?= $record->getId(); ?></td>
-            <td><?= htmlentities($record->getTitle()); ?></td>
-            <td><?= $record->getAmount(); ?></td>
-            <td><?= $record->getCreatedAt()->format('Y-m-d H:i:s'); ?></td>
+            <td>{{ record.id }}</td>
+            <td>{{ record.title }}</td>
+            <td>{{ record.amount }}</td>
+            <td>{{ record.createdAt|date }}</td>
         </tr>
-    <?php endforeach; ?>
+    {% endfor %}
     </tbody>
 </table>
+
+{% endblock %}
