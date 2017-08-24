@@ -1,34 +1,14 @@
 <?php
 
-use Simplex\ResponseListener;
-use Symfony\Component\EventDispatcher\EventDispatcher;
+use Simplex\ServiceContainerProvider;
 use Symfony\Component\HttpFoundation\Request;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
-use Symfony\Component\HttpKernel\Controller\ControllerResolver;
-use Symfony\Component\HttpKernel\HttpCache\HttpCache;
-use Symfony\Component\HttpKernel\HttpCache\Store;
-use Symfony\Component\Routing\Matcher\UrlMatcher;
-use Symfony\Component\Routing\RequestContext;
 
 require __DIR__ . '/../vendor/autoload.php';
 
 session_start();
 
+$sc = ServiceContainerProvider::getServiceContainer();
+
 $request = Request::createFromGlobals();
-$response = new Response();
-
-$routes = include __DIR__ . '/../app/routes.php';
-$context = new RequestContext();
-$matcher = new UrlMatcher($routes, $context);
-
-$dispatcher = new EventDispatcher();
-$dispatcher->addSubscriber(new ResponseListener());
-
-$controllerResolver = new ControllerResolver();
-$argumentResolver = new ArgumentResolver();
-
-$framework = new \Simplex\Framework($dispatcher, $matcher, $controllerResolver, $argumentResolver);
-$framework = new HttpCache($framework, new Store(__DIR__ . '/../cache'));
-
-$framework->handle($request)->send();
+$response = $sc->get('framework')->handle($request);
+$response->send();
