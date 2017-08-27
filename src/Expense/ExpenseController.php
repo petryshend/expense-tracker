@@ -22,13 +22,19 @@ class ExpenseController extends BaseController
     public function indexAction(): Response
     {
         $records = $this->expenses->getByDate(new \DateTimeImmutable('now'));
-        return $this->render('index', ['records' => $records]);
+        return $this->render('index', [
+            'records' => $records,
+            'total_spent' => $this->getTotalSpent($records),
+        ]);
     }
 
     public function allRecordsAction(): Response
     {
         $records = $this->expenses->getAll();
-        return $this->render('index', ['records' => $records]);
+        return $this->render('index', [
+            'records' => $records,
+            'total_spent' => $this->getTotalSpent($records),
+        ]);
     }
 
     public function newExpenseAction(Request $request): Response
@@ -48,5 +54,16 @@ class ExpenseController extends BaseController
         $this->expenses->insert($record);
 
         return new RedirectResponse('/');
+    }
+
+    /**
+     * @param Record[] $records
+     * @return float
+     */
+    private function getTotalSpent(array $records): float
+    {
+        return array_sum(array_map(function(Record $record) {
+            return $record->getAmount();
+        }, $records));
     }
 }
