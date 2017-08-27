@@ -3,6 +3,8 @@
 namespace Expense;
 
 use Simplex\BaseController;
+use Simplex\UserEvent;
+use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -19,10 +21,14 @@ class ExpenseController extends BaseController
 
     public function indexAction(): Response
     {
-        if (!isset($_SESSION['username'])) {
-            return new RedirectResponse('/login');
-        }
-        return $this->render('index', ['records' => $this->expenses->getAll()]);
+        $records = $this->expenses->getByDate(new \DateTimeImmutable('now'));
+        return $this->render('index', ['records' => $records]);
+    }
+
+    public function allRecordsAction(): Response
+    {
+        $records = $this->expenses->getAll();
+        return $this->render('index', ['records' => $records]);
     }
 
     public function newExpenseAction(Request $request): Response

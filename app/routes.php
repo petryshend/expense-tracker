@@ -13,6 +13,9 @@ $routes->add('logout', new Route('/logout', [
 $routes->add('index', new Route('/', [
     '_controller' => 'Expense\ExpenseController::indexAction',
 ]));
+$routes->add('all_records', new Route('/all', [
+    '_controller' => 'Expense\ExpenseController::allRecordsAction',
+]));
 $routes->add('new_expense', new Route('/new_expense', [
     '_controller' => 'Expense\ExpenseController::newExpenseAction'
 ]));
