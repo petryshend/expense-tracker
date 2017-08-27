@@ -25,6 +25,7 @@ class ExpenseController extends BaseController
         return $this->render('index', [
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
+            'today_view' => true,
         ]);
     }
 

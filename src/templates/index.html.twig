@@ -34,7 +34,8 @@
             <td>{{ record.id }}</td>
             <td>{{ record.title }}</td>
             <td>{{ record.amount }}</td>
-            <td>{{ record.createdAt|date }}</td>
+            {% set date_format = today_view ? 'H:i:s' : null %}
+            <td>{{ record.createdAt|date(date_format) }}</td>
         </tr>
     {% endfor %}
     </tbody>
