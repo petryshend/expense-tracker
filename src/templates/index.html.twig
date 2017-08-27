@@ -1,10 +1,8 @@
 {% extends 'base.html.twig' %}
 
-
 {% block body %}
 
-<h2>This is expense tracker</h2>
-<a href="/logout">Logout</a>
+{% include 'partial/navigation.html.twig' %}
 
 <div>
     <form action="/new_expense" class="form-inline" method="post">
