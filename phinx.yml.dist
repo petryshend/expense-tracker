@@ -8,18 +8,18 @@ environments:
     production:
         adapter: pgsql
         host: localhost
-        name: expense_tracker
-        user: postgres
-        pass: postgres
+        name: db_name
+        user: user
+        pass: pass
         port: 5432
         charset: utf8
 
     development:
         adapter: pgsql
         host: localhost
-        name: expense_tracker
-        user: postgres
-        pass: postgres
+        name: db_name
+        user: user
+        pass: pass
         port: 5432
         charset: utf8
 
