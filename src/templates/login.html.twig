@@ -4,24 +4,28 @@
 {% block body %}
 
 <div class="col-md-4 col-md-offset-4">
-    <h3>Login to Expense Tracker</h3>
+    <h4>Welcome to Expense Tracker</h4>
     <form action="" method="post">
-        <div class="form-group">
-            <label for="username">Username</label>
-            <input type="text" class="form-control" id="username" name="username" placeholder="Username">
+        <div class="form-group {{ errors['username'] ? 'has-error' : '' }}">
+            <label class="control-label" for="username">Username</label>
+            <input type="text"
+                   class="form-control"
+                   id="username"
+                   name="username"
+                   placeholder="{{ errors['username'] ? errors['username'] : 'Username' }}"
+            >
         </div>
-        <div class="form-group">
-            <label for="password">Password</label>
-            <input type="password" class="form-control" id="password" name="password" placeholder="Password">
+        <div class="form-group {{ errors['password'] ? 'has-error' : '' }}">
+            <label class="control-label" for="password">Password</label>
+            <input type="password"
+                   class="form-control"
+                   id="password"
+                   name="password"
+                   placeholder="{{ errors['password'] ? errors['password'] : 'Password' }}"
+            >
         </div>
         <button type="submit" class="btn btn-default">Submit</button>
     </form>
-</div>
-
-<div class="col-md-4 col-md-offset-4">
-    {% for error in errors %}
-        <div class="alert alert-danger">{{ error }}</div>
-    {% endfor %}
 </div>
 
 {% endblock %}

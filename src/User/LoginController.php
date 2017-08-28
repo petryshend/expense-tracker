@@ -17,20 +17,20 @@ class LoginController extends BaseController
         $password = $request->get('password');
         if ($request->isMethod(Request::METHOD_POST)) {
             if (!$username) {
-                $errors[] = 'You must enter username';
+                $errors['username'] = 'You must enter username';
             } else {
                 if ($username !== $this->getParameter('login.username')) {
-                    $errors[] = 'Username is wrong';
+                    $errors['username'] = 'Username is wrong';
                 } else {
                     $validUsername = true;
                 }
             }
             $validPassword = false;
             if (!$password) {
-                $errors[] = 'You must enter password';;
+                $errors['password'] = 'You must enter password';;
             } else {
                 if ($password !== $this->getParameter('login.password')) {
-                    $errors[] = 'Password is wrong';
+                    $errors['password'] = 'Password is wrong';
                 } else {
                     $validPassword = true;
                 }
