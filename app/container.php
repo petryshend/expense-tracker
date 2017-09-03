@@ -1,12 +1,11 @@
 <?php
 
-use DataBase\Connection;
-use Expense\Repository;
+use Doctrine\ORM\EntityManager;
+use Doctrine\ORM\Tools\Setup;
 use Simplex\Framework;
 use Simplex\UserListener;
 use Symfony\Component\DependencyInjection\ContainerBuilder;
 use Symfony\Component\DependencyInjection\Reference;
-use Symfony\Component\EventDispatcher\Event;
 use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Symfony\Component\HttpKernel\Controller\ArgumentResolver;
@@ -86,10 +85,18 @@ $sc->register('framework', Framework::class)
 $sc->register('twig', Twig_Environment::class)
     ->setArguments([new Twig_Loader_Filesystem(__DIR__ . '/../src/templates')]);
 
-$sc->register('connection', Connection::class)
-    ->setArguments(['%db.driver%', '%db.host%', '%db.port%', '%db.dbname%', '%db.username%', '%db.password%']);
-
-$sc->register('expense.record', Repository::class)
-    ->setArguments([new Reference('connection')]);
+$sc->register('entity.manager', EntityManager::class)
+    ->setArguments([
+        [
+            'driver' => 'pdo_' . $sc->getParameter('db.driver'),
+            'user' => $sc->getParameter('db.username'),
+            'password' => $sc->getParameter('db.password'),
+            'host' => $sc->getParameter('db.host'),
+            'port' => $sc->getParameter('db.port'),
+            'dbname' => $sc->getParameter('db.dbname'),
+        ],
+        Setup::createAnnotationMetadataConfiguration([__DIR__ . '/../src'], true)
+    ])
+    ->setFactory([EntityManager::class, 'create']);
 
 return $sc;

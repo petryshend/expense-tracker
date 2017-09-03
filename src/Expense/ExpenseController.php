@@ -2,26 +2,27 @@
 
 namespace Expense;
 
+use Doctrine\ORM\EntityManager;
 use Simplex\BaseController;
-use Simplex\UserEvent;
-use Symfony\Component\EventDispatcher\EventDispatcher;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 
 class ExpenseController extends BaseController
 {
-    /** @var Repository */
-    private $expenses;
+    /** @var EntityManager */
+    private $entityManager;
 
     public function __construct()
     {
-        $this->expenses = $this->get('expense.record');
+        $this->entityManager = $this->get('entity.manager');
     }
 
     public function indexAction(): Response
     {
-        $records = $this->expenses->getByDate(new \DateTimeImmutable('now'));
+        /** @var RecordRepository $recordsRepo */
+        $recordsRepo = $this->entityManager->getRepository(Record::class);
+        $records = $recordsRepo->findByDate(new \DateTimeImmutable());
         return $this->render('index', [
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
@@ -31,7 +32,8 @@ class ExpenseController extends BaseController
 
     public function allRecordsAction(): Response
     {
-        $records = $this->expenses->getAll();
+        $repository = $this->entityManager->getRepository(Record::class);
+        $records = $repository->findAll();
         return $this->render('index', [
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
@@ -52,7 +54,8 @@ class ExpenseController extends BaseController
         }
 
         $record = new Record($title, $amount);
-        $this->expenses->insert($record);
+        $this->entityManager->persist($record);
+        $this->entityManager->flush();
 
         return new RedirectResponse('/');
     }

@@ -1,33 +1,50 @@
 <?php
 
 namespace Expense;
+use Doctrine\ORM\Mapping\Column;
+use Doctrine\ORM\Mapping\Entity;
+use Doctrine\ORM\Mapping\GeneratedValue;
+use Doctrine\ORM\Mapping\Id;
+use Doctrine\ORM\Mapping\Table;
 
+/**
+ * @Entity(repositoryClass="Expense\RecordRepository")
+ * @Table(name="expenses")
+ */
 class Record
 {
-    /** @var int */
+    /**
+     * @var int
+     * @Id @Column(type="integer")
+     * @GeneratedValue(strategy="AUTO")
+     */
     private $id;
-    /** @var string */
-    private $title;                                
-    /** @var float */                              
+    /**
+     * @var string
+     * @Column(type="string")
+     */
+    private $title;
+    /**
+     * @var float
+     * @Column(type="float")
+     */
     private $amount;                               
-    /** @var \DateTimeImmutable */
+    /**
+     * @var \DateTimeImmutable
+     * @Column(type="datetime", name="created_at")
+     */
     private $createdAt;
 
     function __construct(string $title, float $amount)
     {
         $this->title = $title;
         $this->amount = $amount;
+        $this->createdAt = new \DateTimeImmutable();
     }
 
     public function getId(): int
     {
         return $this->id;
-    }
-
-    public function setId(int $id): self
-    {
-        $this->id = $id;
-        return $this;
     }
 
     public function getTitle(): string
@@ -40,14 +57,8 @@ class Record
         return $this->amount;
     }
 
-    public function getCreatedAt(): \DateTimeImmutable
+    public function getCreatedAt(): \DateTimeInterface
     {
         return $this->createdAt;
-    }
-
-    public function setCreatedAt(\DateTimeImmutable $createdAd): self
-    {
-        $this->createdAt = $createdAd;
-        return $this;
     }
 }
