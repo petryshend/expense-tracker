@@ -2,4 +2,4 @@
 
 git pull --rebase
 composer install
-vendor/bin/phinx migrate
+php doctrine.php migrations:migrate
