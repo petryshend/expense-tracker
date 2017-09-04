@@ -8,6 +8,11 @@ use Doctrine\ORM\Query\ResultSetMappingBuilder;
 
 class RecordRepository extends EntityRepository
 {
+    public function findAll()
+    {
+        return $this->findBy([], ['createdAt' => 'DESC']);
+    }
+
     public function findByDate(\DateTimeInterface $dateTime): array
     {
         $sql =
