@@ -1,6 +1,0 @@
-CREATE TABLE expenses(
-  id SERIAL PRIMARY KEY,
-  title TEXT NOT NULL,
-  amount DECIMAL NOT NULL,
-  created_at TIMESTAMP NOT NULL DEFAULT NOW()
-);
