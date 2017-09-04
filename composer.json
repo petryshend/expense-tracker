@@ -16,6 +16,8 @@
         "fzaninotto/faker": "^1.7",
         "symfony/yaml": "^3.3",
         "doctrine/orm": "^2.5",
-        "doctrine/migrations": "^1.5"
+        "doctrine/migrations": "^1.5",
+        "doctrine/data-fixtures": "^1.2",
+        "symfony/console": "^3.3"
     }
 }

@@ -1,6 +1,7 @@
 #!/usr/bin/php
 <?php
 
+use Command\DoctrineFixturesCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\DiffCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\ExecuteCommand;
 use Doctrine\DBAL\Migrations\Tools\Console\Command\GenerateCommand;
@@ -41,6 +42,7 @@ $cli->addCommands([
     new MigrateCommand(),
     new StatusCommand(),
     new VersionCommand(),
+    new DoctrineFixturesCommand(),
 ]);
 
 ConsoleRunner::addCommands($cli);
