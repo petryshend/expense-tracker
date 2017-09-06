@@ -23,6 +23,7 @@
         "doctrine/orm": "^2.5",
         "doctrine/migrations": "1.2.2",
         "doctrine/data-fixtures": "^1.2",
-        "symfony/console": "^3.3"
+        "symfony/console": "^3.3",
+        "myclabs/php-enum": "^1.5"
     }
 }

@@ -23,7 +23,8 @@
     <thead>
     <tr>
         <th>#</th>
-        <th>Title</th>
+        <th>Type</th>
+        <th>Comment</th>
         <th>Amount</th>
         <th>Created At</th>
     </tr>
@@ -32,7 +33,8 @@
     {% for record in records %}
         <tr>
             <td>{{ record.id }}</td>
-            <td>{{ record.title }}</td>
+            <td>{{ record.type }}</td>
+            <td>{{ record.comment }}</td>
             <td>{{ record.amount }}</td>
             {% set date_format = today_view ? 'H:i:s' : null %}
             <td>{{ record.createdAt|date(date_format) }}</td>
@@ -52,14 +54,22 @@
                 </button>
             </div>
             <div class="modal-body">
-                <form action="/new_expense" class="form-inline" method="post" id="create-expense-form">
+                <form action="/new_expense" class="form" method="post" id="create-expense-form">
                     <div class="form-group">
-                        <label for="new-expense-title">Title</label>
-                        <input type="text" class="form-control" id="new-expense-title" name="new-expense-title" placeholder="Title">
+                        <label for="new-expense-type">Type</label>
+                        <select class="form-control" name="new-expense-type" id="new-expense-type">
+                            {% for type in expense_types %}
+                                <option value="{{ type }}">{{ type }}</option>
+                            {% endfor %}
+                        </select>
                     </div>
                     <div class="form-group">
                         <label for="new-expense-amount">Amount</label>
                         <input type="number" step="0.01" class="form-control" id="new-expense-amount" name="new-expense-amount" placeholder="Amount">
+                    </div>
+                    <div class="form-group">
+                        <label for="new-expense-comment">Comment</label>
+                        <input type="text" class="form-control" id="new-expense-comment" name="new-expense-comment" placeholder="Comment">
                     </div>
                 </form>
             </div>

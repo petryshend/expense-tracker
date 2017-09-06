@@ -2,7 +2,6 @@
 
 namespace Expense;
 
-
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
 

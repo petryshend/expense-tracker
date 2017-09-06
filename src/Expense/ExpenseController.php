@@ -27,6 +27,7 @@ class ExpenseController extends BaseController
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
             'today_view' => true,
+            'expense_types' => ExpenseType::values(),
         ]);
     }
 
@@ -37,6 +38,7 @@ class ExpenseController extends BaseController
         return $this->render('index', [
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
+            'expense_types' => ExpenseType::values(),
         ]);
     }
 
@@ -46,14 +48,15 @@ class ExpenseController extends BaseController
             return new RedirectResponse('/');
         }
 
-        $title = $request->get('new-expense-title');
+        $type = $request->get('new-expense-type');
         $amount = $request->get('new-expense-amount');
+        $comment = $request->get('new-expense-comment');
 
-        if (!$title || !$amount) {
+        if (!$type || !$amount) {
             return new RedirectResponse('/');
         }
 
-        $record = new Record($title, $amount);
+        $record = new Record(new ExpenseType($type), $amount, $comment);
         $this->entityManager->persist($record);
         $this->entityManager->flush();
 

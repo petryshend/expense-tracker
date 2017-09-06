@@ -1,6 +1,7 @@
 <?php
 
 namespace Expense;
+
 use Doctrine\ORM\Mapping\Column;
 use Doctrine\ORM\Mapping\Entity;
 use Doctrine\ORM\Mapping\GeneratedValue;
@@ -23,7 +24,12 @@ class Record
      * @var string
      * @Column(type="string")
      */
-    private $title;
+    private $type;
+    /**
+     * @var string
+     * @Column(type="string", nullable=true)
+     */
+    private $comment;
     /**
      * @var float
      * @Column(type="float")
@@ -35,10 +41,11 @@ class Record
      */
     private $createdAt;
 
-    function __construct(string $title, float $amount)
+    function __construct(ExpenseType $type, float $amount, string $comment = '')
     {
-        $this->title = $title;
+        $this->type = $type->getValue();
         $this->amount = $amount;
+        $this->comment = $comment;
         $this->createdAt = new \DateTimeImmutable();
     }
 
@@ -47,14 +54,19 @@ class Record
         return $this->id;
     }
 
-    public function getTitle(): string
+    public function getType(): string
     {
-        return $this->title;
+        return $this->type;
     }
 
     public function getAmount(): float
     {
         return $this->amount;
+    }
+
+    public function getComment(): string
+    {
+        return $this->comment;
     }
 
     public function setCreatedAt(\DateTimeInterface $createdAt): self

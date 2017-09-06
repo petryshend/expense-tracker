@@ -14,12 +14,12 @@ $(function() {
         }
     });
     $createExpenseForm.on('submit', function() {
-        if ($('#new-expense-title').val() === '' || $('#new-expense-amount').val() === '') {
-            toastr.warning('You must enter title and amount');
+        var amountValue = $('#new-expense-amount').val();
+        if (amountValue === '') {
+            toastr.warning('You must enter valid amount');
             return false;
-        } else {
-            return true;
         }
+        return true;
     })
 
 });
