@@ -64,7 +64,10 @@ class Record
         return $this->amount;
     }
 
-    public function getComment(): string
+    /**
+     * @return string|null
+     */
+    public function getComment()
     {
         return $this->comment;
     }
