@@ -1,6 +1,6 @@
 $(function() {
     $('#new-expense-modal').on('shown.bs.modal', function () {
-        $('#new-expense-title').focus()
+        $('#new-expense-amount').focus();
     });
 
     $('#create-expense-btn').on('click', function() {
