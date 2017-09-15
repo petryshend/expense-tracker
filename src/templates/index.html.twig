@@ -6,14 +6,17 @@
 
 
     <div class="row">
-        <div class="col-xs-3">
+        <div class="col-md-4">
             <!-- Button trigger modal -->
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#new-expense-modal">
                 Create expense
             </button>
         </div>
-        <div class="col-xs-4 col-xs-offset-5">
-            <p class="bg-primary total-spent">Total spent: {{ total_spent }}</p>
+        <div class="col-md-4">
+            <p class="bg-info total-spent">This month: {{ spent_this_month }}</p>
+        </div>
+        <div class="col-md-4">
+            <p class="bg-primary total-spent">Total: {{ total_spent }}</p>
         </div>
     </div>
 

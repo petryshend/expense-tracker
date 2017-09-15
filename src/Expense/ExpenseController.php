@@ -28,6 +28,7 @@ class ExpenseController extends BaseController
             'total_spent' => $this->getTotalSpent($records),
             'today_view' => true,
             'expense_types' => ExpenseType::values(),
+            'spent_this_month' => $this->getSpentThisMonth($recordsRepo->findAll()),
         ]);
     }
 
@@ -38,6 +39,7 @@ class ExpenseController extends BaseController
         return $this->render('index', [
             'records' => $records,
             'total_spent' => $this->getTotalSpent($records),
+            'spent_this_month' => $this->getSpentThisMonth($records),
             'expense_types' => ExpenseType::values(),
         ]);
     }
@@ -72,5 +74,21 @@ class ExpenseController extends BaseController
         return array_sum(array_map(function(Record $record) {
             return $record->getAmount();
         }, $records));
+    }
+
+    /**
+     * @param Record[] $records
+     * @return float
+     */
+    private function getSpentThisMonth(array $records): float
+    {
+        $today = new \DateTimeImmutable();
+        $thisMonthRecords = array_filter($records, function(Record $record) use ($today) {
+            return $record->getCreatedAt()->format('m') === $today->format('m')
+                && $record->getCreatedAt()->format('y') === $today->format('y');
+        });
+        return array_sum(array_map(function(Record $record) {
+            return $record->getAmount();
+        }, $thisMonthRecords));
     }
 }
