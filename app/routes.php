@@ -4,6 +4,9 @@ use Symfony\Component\Routing\Route;
 use Symfony\Component\Routing\RouteCollection;
 
 $routes = new RouteCollection();
+$routes->add('register', new Route('/register', [
+    '_controller' => 'User\LoginController::registerAction'
+]));
 $routes->add('login', new Route('/login', [
     '_controller' => 'User\LoginController::loginAction'
 ]));

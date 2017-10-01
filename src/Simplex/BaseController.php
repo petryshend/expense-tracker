@@ -16,7 +16,7 @@ class BaseController
         return ServiceContainerProvider::getServiceContainer()->getParameter($parameter);
     }
 
-    protected function render(string $template, array $arguments): Response
+    protected function render(string $template, array $arguments = []): Response
     {
         /** @var \Twig_Environment $twig */
         $twig = $this->get('twig');

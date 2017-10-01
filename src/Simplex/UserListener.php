@@ -16,9 +16,10 @@ class UserListener implements EventSubscriberInterface
         /** @var UrlGenerator $urlGenerator */
         $urlGenerator = $container->get('url.generator');
         $loginPath = $urlGenerator->generate('login');
+        $registerPath = $urlGenerator->generate('register');
         $currentPath = $event->getRequest()->getPathInfo();
 
-        if ($currentPath === $loginPath) {
+        if ($currentPath === $loginPath || $currentPath === $registerPath) {
             return;
         }
 

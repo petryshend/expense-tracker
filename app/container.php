@@ -15,6 +15,7 @@ use Symfony\Component\HttpKernel\EventListener\RouterListener;
 use Symfony\Component\Routing\Generator\UrlGenerator;
 use Symfony\Component\Routing\Matcher\UrlMatcher;
 use Symfony\Component\Routing\RequestContext;
+use Symfony\Component\Yaml\Yaml;
 
 function getConfigKeys(array $array, $keyName = '')
 {
@@ -33,7 +34,8 @@ function getConfigKeys(array $array, $keyName = '')
 }
 
 $sc = new ContainerBuilder();
-$config = getConfigKeys(require 'config.php');
+$config = getConfigKeys(Yaml::parse(file_get_contents(__DIR__ . '/config.yml')));
+
 $routes = require 'routes.php';
 
 foreach ($config as $key => $val) {
@@ -83,7 +85,10 @@ $sc->register('framework', Framework::class)
 ;
 
 $sc->register('twig', Twig_Environment::class)
-    ->setArguments([new Twig_Loader_Filesystem(__DIR__ . '/../src/templates')]);
+    ->setArguments([
+        new Twig_Loader_Filesystem(__DIR__ . '/../src/templates'), 
+        ['debug' => $sc->getParameter('env.debug')]
+    ]);
 
 $sc->register('entity.manager', EntityManager::class)
     ->setArguments([

@@ -9,6 +9,11 @@ use Symfony\Component\HttpFoundation\Response;
 
 class LoginController extends BaseController
 {
+    public function registerAction(Request $request): Response
+    {
+        return $this->render('register');
+    }
+
     public function loginAction(Request $request): Response
     {
         $errors = [];
