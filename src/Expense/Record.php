@@ -82,4 +82,15 @@ class Record
     {
         return $this->createdAt;
     }
+
+    public function serialize(): array
+    {
+        return [
+            'id' => $this->id,
+            'type' => $this->type,
+            'comment' => $this->comment,
+            'amount' => $this->amount,
+            'createdAt' => $this->createdAt->format('Y-m-d H:i:s')
+        ];
+    }
 }

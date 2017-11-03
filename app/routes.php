@@ -23,4 +23,8 @@ $routes->add('new_expense', new Route('/new_expense', [
     '_controller' => 'Expense\ExpenseController::newExpenseAction'
 ]));
 
+$routes->add('api_expenses', new Route('/api/expenses', [
+    '_controller' => 'Api\ExpenseController::expensesAction',
+]));
+
 return $routes;
