@@ -4,6 +4,7 @@ namespace Expense;
 
 use Doctrine\ORM\EntityRepository;
 use Doctrine\ORM\Query\ResultSetMappingBuilder;
+use Entity\Record;
 
 class RecordRepository extends EntityRepository
 {

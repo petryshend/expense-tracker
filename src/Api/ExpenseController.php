@@ -2,7 +2,7 @@
 
 namespace Api;
 
-use Expense\Record;
+use Entity\Record;
 use Expense\RecordRepository;
 use Simplex\BaseController;
 use Symfony\Component\HttpFoundation\JsonResponse;

@@ -3,6 +3,7 @@
 namespace Expense;
 
 use Doctrine\ORM\EntityManager;
+use Entity\Record;
 use Simplex\BaseController;
 use Symfony\Component\HttpFoundation\RedirectResponse;
 use Symfony\Component\HttpFoundation\Request;
